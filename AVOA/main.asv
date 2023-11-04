@@ -1,0 +1,35 @@
+clear all 
+close all
+clc
+
+data = xlsread('Book1')
+% Population size and stoppoing condition 
+pop_size = 34;  
+max_iter = 100;  
+
+% Define your objective function's details here
+fobj = @ObjectiveFunction;
+variables_no = 7;
+lower_bound = -100; % can be a vector too
+upper_bound = 100; % can be a vector too
+      
+[Best_vulture1_F, Best_vulture1_X, convergence_curve] = AVOA(pop_size, max_iter,lower_bound,upper_bound,variables_no,ObjectiveFunction);
+
+
+figure 
+
+% Best optimal values for the decision variables 
+subplot(1,2,1)
+parallelcoords(Best_vulture1_X)
+xlabel('Decision variables')
+ylabel('Best estimated values ')
+box on
+
+% Best convergence curve
+subplot(1,2,2)
+plot(convergence_curve);
+title('Convergence curve of AVOA')
+xlabel('Current_iteration');
+ylabel('Objective value');
+box on
+

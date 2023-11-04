@@ -1,0 +1,33 @@
+function [SSE_X, SSE_Y, SSE_Z] = myobj(phi, WGS, War)
+
+R_X = phi(1);
+R_y = phi(2);
+R_z = phi(3);
+t_x = phi(4);
+t_y = phi(5);
+t_z = phi(6);
+ s  = phi(7);
+
+
+X_WGS = WGS(:,1);
+Y_WGS = WGS(:,2);
+Z_WGS = WGS(:,3);
+
+X_War = War(:,4);
+Y_War = War(:,5);
+Z_War = War(:,6);
+
+
+New_Xwar = X_WGS + (Y_WGS * R_z) - (Z_WGS * R_y) + (X_WGS * s) + t_x;
+New_Ywar = (-X_WGS * R_z) + Y_WGS + (Z_WGS * R_x) + (Y_WGS * s) + t_y;
+New_Zwar = (X_WGS * R_y) - (Y_WGS * R_x) + Z_WGS + (Z_WGS * s) + t_z;
+
+X_error = X_War - New_Xwar;
+Y_error = Y_War - New_Ywar;
+Z_error = Z_War - New_Zwar;
+
+
+SSE_X = sum(X_error.^2);
+SSE_Y = sum(Y_error.^2);
+SSE_Z = sum(Z_error.^2);
+end
